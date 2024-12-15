@@ -1,0 +1,27 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<div>Количество пользоваталей {{ user_count }}</div>
+
+<div>Количество транзакций {{ transaction_count }}</div>
+
+<div>Общая сумма транзакций за последние сутки {{ transaction_sum_by_day }}</div>
+
+<div>
+    Последние десять транзакций
+    {% for transaction in last_transaction %}
+        <li> Сумма транзакции {{ transaction.sum }}<br>Комиссия {{ transaction.comision }}<br>
+            {% if transaction.status == 0 %}
+                Статус: Ожидание
+            {% elif  transaction.status == 1 %}
+                Статус Подтверждена
+            {% elif  transaction.status == 2 %}
+                Статус Отменена
+            {% elif  transaction.status == 3 %}
+                Статус Истекла
+            {% endif %}
+        </li>
+
+    {% endfor %}
+</div>
+{% endblock body %}
